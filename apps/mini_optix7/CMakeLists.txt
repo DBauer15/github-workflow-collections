@@ -50,7 +50,7 @@ add_executable(exp_mini_optix7
 target_link_libraries(exp_mini_optix7
 PRIVATE
   ${optix_LIBRARY}
-  ${CUDA_LIBRARIES}
+  ${CUDA_LIBRARIES} cuda
   TBB::tbb
   gdt tfnmodule glfwApp
 )
