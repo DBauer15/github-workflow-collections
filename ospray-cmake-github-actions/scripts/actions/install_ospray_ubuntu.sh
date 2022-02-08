@@ -67,7 +67,7 @@ fi
 ## Prepare to install
 ## -----------------
 RELEASE_URL="https://github.com/ospray/ospray/releases/download/v${OSPRAY_VERSION_MAJOR_MINOR}/ospray-${OSPRAY_VERSION_MAJOR_MINOR}.x86_64.linux.tar.gz"
-RELEASE_FILE="${PWD}/ospray-${OSPRAY_VERSION_MAJOR_MINOR}.x86_64.linux.tar.gz"
+RELEASE_FILE="${PWD}/ospray-${OSPRAY_VERSION_MAJOR_MINOR}.x86_64.linux"
 
 echo "RELEASE_URL ${RELEASE_URL}"
 echo "RELEASE_FILE ${RELEASE_FILE}"
@@ -76,7 +76,7 @@ echo "RELEASE_FILE ${RELEASE_FILE}"
 ## Download and install
 ## -----------------
 wget ${RELEASE_URL}
-tar -xzvf ${RELEASE_FILE}
+tar -xzvf "${RELEASE_FILE}.tar.gz"
 
 if [[ $? -ne 0 ]]; then
     echo "OSPRay Installation Error."
