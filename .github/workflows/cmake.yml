@@ -41,14 +41,14 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: recursive
-      - name: Install CUDA
-        env:
-          cuda: ${{ matrix.cuda }}
-        run: bash ./cuda-cmake-github-actions/scripts/actions/install_cuda_ubuntu.sh
-        shell: bash
+      # - name: Install CUDA
+      #   env:
+      #     cuda: ${{ matrix.cuda }}
+      #   run: bash ./cuda-cmake-github-actions/scripts/actions/install_cuda_ubuntu.sh
+      #   shell: bash
       - name: Install OSPRay
         env:
-          cuda: ${{ matrix.ospray }}
+          ospray: ${{ matrix.ospray }}
         run: bash ./ospray-cmake-github-actions/scripts/actions/install_ospray_ubuntu.sh
         shell: bash
       - name: CMake
