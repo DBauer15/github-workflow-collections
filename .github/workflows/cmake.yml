@@ -1,37 +1,104 @@
-name: CMake
+name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
-
-env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
+    branches:
+      - master
 
 jobs:
-  build:
-    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
-    # You can convert this to a matrix build if you need cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: ubuntu-latest
-
+  build_linux:
+    name: Build on Linux Systems
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            cuda: "11.3"
+            ospray: "2.5.0"
+            arch: 86
+          # - os: ubuntu-18.04
+          #   cuda: "10.2"
+          #   arch: 75
+          # - os: ubuntu-18.04
+          #   cuda: "10.2"
+          #   arch: 70
+          # - os: ubuntu-18.04
+          #   cuda: "10.2"
+          #   arch: 61
+          # - os: ubuntu-18.04
+          #   cuda: "10.2"
+          #   arch: 37
+    env:
+      build_dir: "build"
+      config: "Release"
+      GDT_CUDA_ARCHITECTURES: ${{ matrix.arch }}
     steps:
-    - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install cmake gcc g++ libtbb-dev
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Install CUDA
+        env:
+          cuda: ${{ matrix.cuda }}
+        run: ./cuda-cmake-github-actions/scripts/actions/install_cuda_ubuntu.sh
+        shell: bash
+      - name: Install OSPRay
+        env:
+          cuda: ${{ matrix.ospray }}
+        run: ./ospray-cmake-github-actions/scripts/actions/install_ospray_ubuntu.sh
+        shell: bash
+      - name: CMake
+        run: cmake . -B ${{ env.build_dir }} -DCMAKE_BUILD_TYPE=${{ env.config }} -DBUILD_OPTIX7=OFF -DBUILD_OSPRAY=ON -Dospray_DIR=${{ env.OSPRAY_CMAKE_DIR }}
+      - name: Build
+        working-directory: ${{ env.build_dir }}
+        run: cmake --build . --target all --verbose -j `nproc`
 
-    - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-
-    - name: Build
-      # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C ${{env.BUILD_TYPE}}
-      
+  # build_windows:
+  #   name: Build on Windows
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #     matrix:
+  #       include:
+  #         - os: windows-2019
+  #           visual_studio: "Visual Studio 16 2019"
+  #           cuda: "11.5.1"
+  #           arch: 86
+  #         - os: windows-2019
+  #           visual_studio: "Visual Studio 16 2019"
+  #           cuda: "11.5.1"
+  #           arch: 75
+  #         - os: windows-2019
+  #           visual_studio: "Visual Studio 16 2019"
+  #           cuda: "11.5.1"
+  #           arch: 70
+  #         - os: windows-2019
+  #           visual_studio: "Visual Studio 16 2019"
+  #           cuda: "11.5.1"
+  #           arch: 61
+  #         - os: windows-2019
+  #           visual_studio: "Visual Studio 16 2019"
+  #           cuda: "11.5.1"
+  #           arch: 37
+  #   env:
+  #     build_dir: "build"
+  #     config: "Release"
+  #     GDT_CUDA_ARCHITECTURES: ${{ matrix.arch }}
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         submodules: recursive
+  #     - name: Install CUDA
+  #       env:
+  #         cuda: ${{ matrix.cuda }}
+  #         visual_studio: ${{ matrix.visual_studio }}
+  #       shell: powershell
+  #       run: .\dependencies\cuda-cmake-github-actions\scripts\actions\install_cuda_windows.ps1
+  #     - name: CMake
+  #       run: cmake . -B ${{ env.build_dir }} -G "${{ matrix.visual_studio }}" -A x64
+  #     - name: Build
+  #       working-directory: ${{ env.build_dir }}
+  #       run: cmake --build . --config ${{ env.config }} --target ALL_BUILD --verbose
