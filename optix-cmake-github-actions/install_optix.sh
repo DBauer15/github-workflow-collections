@@ -49,6 +49,7 @@ fi
 DIR="${OPTIX_ALLVERSIONS[${OPTIX_VERSION_MAJOR_MINOR}]}"
 
 export OptiX_INSTALL_DIR="${PWD}/optix-cmake-github-actions/${DIR}"
+echo export OptiX_INSTALL_DIR="${PWD}/optix-cmake-github-actions/${DIR}"
 
 # If executed on github actions, make the appropriate echo statements to update the environment
 if [[ $GITHUB_ACTIONS ]]; then

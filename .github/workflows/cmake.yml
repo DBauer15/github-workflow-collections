@@ -58,6 +58,8 @@ jobs:
         run: bash ./ospray-cmake-github-actions/install_ospray_ubuntu.sh
         shell: bash
       - name: CMake
+        env: 
+          OptiX_INSTALL_DIR: ${{ env.OptiX_INSTALL_DIR }}
         run: cmake . -B ${{ env.build_dir }} -DCMAKE_BUILD_TYPE=${{ env.config }} -DBUILD_OPTIX7=ON -DBUILD_OSPRAY=ON -Dospray_DIR=${{ env.OSPRAY_CMAKE_DIR }}
       - name: Build
         working-directory: ${{ env.build_dir }}
