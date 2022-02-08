@@ -28,10 +28,10 @@ function version_lt() {
 }
 
 ## -------------------
-## Select CUDA version
+## Select OSPRay version
 ## -------------------
 
-# Get the cuda version from the environment as $cuda.
+# Get the ospray version from the environment as $ospray.
 OSPRAY_VERSION_MAJOR_MINOR=${ospray}
 
 # Split the version.
@@ -48,7 +48,7 @@ echo "OSPRAY_MINOR: ${OSPRAY_MINOR}"
 echo "OSPRAY_PATCH: ${OSPRAY_PATCH}"
 echo "UBUNTU_VERSION: ${UBUNTU_VERSION}"
 
-# If we don't know the CUDA_MAJOR or MINOR, error.
+# If we don't know the OSPRAY_MAJOR or MINOR, error.
 if [ -z "${OSPRAY_MAJOR}" ] ; then
     echo "Error: Unknown OSPRay Major version. Aborting."
     exit 1
@@ -92,7 +92,7 @@ export LD_LIBRARY_PATH="${RELEASE_FILE}/lib:${LD_LIBRARY_PATH}"
 
 # If executed on github actions, make the appropriate echo statements to update the environment
 if [[ $GITHUB_ACTIONS ]]; then
-    # Set paths for subsequent steps, using ${CUDA_PATH}
+    # Set paths for subsequent steps, using ${OSPRAY_CMAKE_DIR}
     echo "Adding OSPRay to OSPRAY_CMAKE_DIR and LD_LIBRARY_PATH"
     echo "OSPRAY_CMAKE_DIR=${OSPRAY_CMAKE_DIR}" >> $GITHUB_ENV
     echo "LD_LIBRARY_PATH=${RELEASE_FILE}/lib:${LD_LIBRARY_PATH}" >> $GITHUB_ENV
