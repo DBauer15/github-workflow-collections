@@ -146,10 +146,10 @@ public:
     render_buffer.download_async(rb_bg.data(), fb_pixel_count, stream);
   }
 
-  void background_download()
-  {
-    render_buffer.download(rb_bg.data(), fb_pixel_count);
-  }
+  // void background_download()
+  // {
+  //   render_buffer.download(rb_bg.data(), fb_pixel_count);
+  // }
 
   T* d_pointer() const
   {
