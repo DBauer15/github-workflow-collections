@@ -30,7 +30,7 @@ $OSPRAY_PATCH=$Matches.patch
 ## Select CUDA packages to install from environment
 ## ------------------------------------------------
 
-$CUDA_PACKAGES = ""
+# $CUDA_PACKAGES = ""
 
 # for CUDA >= 11 cudart is a required package.
 # if([version]$CUDA_VERSION_FULL -ge [version]"11.0") {
@@ -50,6 +50,7 @@ Foreach ($package in $CUDA_PACKAGES_IN) {
 
 }
 echo "$($CUDA_PACKAGES)"
+
 ## -----------------
 ## Prepare download
 ## -----------------

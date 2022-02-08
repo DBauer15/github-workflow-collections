@@ -51,8 +51,6 @@ target_link_libraries(exp_mini_optix7
 PRIVATE
   ${optix_LIBRARY}
   ${CUDA_LIBRARIES}
-  ${CUDA_CUDA_LIBRARY}
-  ${CUDA_NVRTC_LIBRARY}
   TBB::tbb
   gdt tfnmodule glfwApp
 )
