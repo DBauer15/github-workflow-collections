@@ -44,12 +44,12 @@ jobs:
       - name: Install CUDA
         env:
           cuda: ${{ matrix.cuda }}
-        run: ./cuda-cmake-github-actions/scripts/actions/install_cuda_ubuntu.sh
+        run: bash ./cuda-cmake-github-actions/scripts/actions/install_cuda_ubuntu.sh
         shell: bash
       - name: Install OSPRay
         env:
           cuda: ${{ matrix.ospray }}
-        run: ./ospray-cmake-github-actions/scripts/actions/install_ospray_ubuntu.sh
+        run: bash ./ospray-cmake-github-actions/scripts/actions/install_ospray_ubuntu.sh
         shell: bash
       - name: CMake
         run: cmake . -B ${{ env.build_dir }} -DCMAKE_BUILD_TYPE=${{ env.config }} -DBUILD_OPTIX7=OFF -DBUILD_OSPRAY=ON -Dospray_DIR=${{ env.OSPRAY_CMAKE_DIR }}
