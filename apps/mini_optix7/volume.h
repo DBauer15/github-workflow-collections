@@ -359,7 +359,7 @@ public:
     self.volume = v;
   }
 
-  void set_transfer_function(Simple1DArrayData& c, Simple1DArrayData& a)
+  void set_transfer_function(Simple1DArrayData c, Simple1DArrayData a)
   {
     self.colors = c;
     self.alphas = a;
