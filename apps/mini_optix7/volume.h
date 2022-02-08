@@ -145,7 +145,7 @@ compute_scalar_minmax(void* _array, size_t count, size_t stride = 0);
 
 template<typename T>
 inline Array1D
-CreateArray1D(std::vector<T>& input)
+CreateArray1D(std::vector<T> input)
 {
   static_assert(std::is_scalar<T>::value, "expecting a scalar type");
 
@@ -162,7 +162,7 @@ CreateArray1D(std::vector<T>& input)
 
 template<>
 inline Array1D
-CreateArray1D<vec4f>(std::vector<vec4f>& input)
+CreateArray1D<vec4f>(std::vector<vec4f> input)
 {
   Array1D output;
 
