@@ -38,7 +38,7 @@ jobs:
       GDT_CUDA_ARCHITECTURES: ${{ matrix.arch }}
     steps:
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install cmake gcc g++ libtbb-dev libglfw3-dev
+        run: sudo apt-get update && sudo apt-get install cmake gcc g++ libtbb-dev libglfw3-dev xorg-dev
       - uses: actions/checkout@v2
         with:
           submodules: recursive
