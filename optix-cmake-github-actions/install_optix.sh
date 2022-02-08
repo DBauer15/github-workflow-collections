@@ -4,7 +4,7 @@
 ## -------------------
 
 declare -A OPTIX_ALLVERSIONS=( 
-    ["7.3.0"]="cow"
+    ["7.3.0"]="NVIDIA-OptiX-SDK-7.3.0-linux64-x86_64"
 )
 
 ## -------------------
