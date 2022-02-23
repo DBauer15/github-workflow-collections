@@ -86,10 +86,6 @@ struct LaunchParams { // shared global data
   vec3f lightPos{ -907.108f, 2205.875f, -400.0267f };
 };
 
-// #define epsilon 1e-7f
-#define float_large 1e31f
-#define float_small 1e-31f
-
 // ------------------------------------------------------------------
 //
 // Exclusive Device Functions

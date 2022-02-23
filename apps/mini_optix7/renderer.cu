@@ -73,28 +73,12 @@ getProgramData()
 }
 
 inline __device__ bool
-intersectBox(float& t0, float& t1, const vec3f& ray_ori, const vec3f& ray_dir, const vec3f& lower, const vec3f& upper)
+intersectBox(float& t0, float& t1, const vec3f& ray_org, const vec3f& ray_dir, const vec3f& lower, const vec3f& upper)
 {
-#if 1
-  const vec3i is_small =
-    vec3i(fabs(ray_dir.x) < float_small, fabs(ray_dir.y) < float_small, fabs(ray_dir.z) < float_small);
-  const vec3f rcp_dir = 1.f / ray_dir;                                                   // ray direction reciprocal
-  const vec3f t_lo = vec3f(is_small.x ? float_large : (lower.x - ray_ori.x) * rcp_dir.x, //
-                           is_small.y ? float_large : (lower.y - ray_ori.y) * rcp_dir.y, //
-                           is_small.z ? float_large : (lower.z - ray_ori.z) * rcp_dir.z  //
-  );
-  const vec3f t_hi = vec3f(is_small.x ? -float_large : (upper.x - ray_ori.x) * rcp_dir.x, //
-                           is_small.y ? -float_large : (upper.y - ray_ori.y) * rcp_dir.y, //
-                           is_small.z ? -float_large : (upper.z - ray_ori.z) * rcp_dir.z  //
-  );
+  const vec3f t_lo = (lower - ray_org) / ray_dir;
+  const vec3f t_hi = (upper - ray_org) / ray_dir;
   t0 = max(t0, reduce_max(min(t_lo, t_hi)));
   t1 = min(t1, reduce_min(max(t_lo, t_hi)));
-#else
-  const vec3f t_lo = (lower - ray_ori) / ray_dir;
-  const vec3f t_hi = (upper - ray_ori) / ray_dir;
-  t0 = max(t0, reduce_max(min(t_lo, t_hi)));
-  t1 = min(t1, reduce_min(max(t_lo, t_hi)));
-#endif
   return t1 > t0;
 }
 
@@ -103,14 +87,8 @@ sampleVolumeObjectSpace(const RegularVolumeData& self, vec3f p)
 {
   p.x = clamp(p.x, 0.f, 1.f);
   p.y = clamp(p.y, 0.f, 1.f);
-  float val;
-  switch (self.type) {
-  case VALUE_TYPE_UINT16: val = tex3D<uint16_t>(self.data, p.x, p.y, p.z); break;
-  case VALUE_TYPE_INT32: val = tex3D<int>(self.data, p.x, p.y, p.z); break;
-  case VALUE_TYPE_UINT32: val = tex3D<unsigned int>(self.data, p.x, p.y, p.z); break;
-  default: val = tex3D<float>(self.data, p.x, p.y, p.z); break;
-  }
-  return val;
+  p.z = clamp(p.z, 0.f, 1.f);
+  return tex3D<float>(self.data, p.x, p.y, p.z);
 }
 
 inline __device__ vec3f
