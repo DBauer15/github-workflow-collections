@@ -94,6 +94,9 @@ struct LaunchParams { // shared global data
 #ifdef __CUDA_ARCH__
 #endif
 
+#define float_large std::numeric_limits<float>::max()
+#define float_small std::numeric_limits<float>::min()
+
 // ------------------------------------------------------------------
 //
 // Exclusive Host Functions
