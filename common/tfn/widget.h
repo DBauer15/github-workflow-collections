@@ -4,6 +4,10 @@
 // ======================================================================== //
 #pragma once
 
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
+
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
