@@ -102,7 +102,7 @@ jobs:
 
       - name: Install OSPRay
         shell: powershell
-        run: .\ospray-cmake-github-actions\install_ospray_ubuntu.ps1
+        run: .\ospray-cmake-github-actions\install_ospray_windows.ps1
         env:
           ospray: ${{ matrix.ospray }}
 
