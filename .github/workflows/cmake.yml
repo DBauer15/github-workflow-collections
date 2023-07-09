@@ -114,7 +114,7 @@ jobs:
         run: .\cuda-cmake-github-actions\scripts\actions\install_cuda_windows.ps1
 
       - name: CMake
-        run: cmake . -B ${{ env.build_dir }} -G "${{ matrix.visual_studio }}" -A x64 -DCMAKE_BUILD_TYPE=${{ env.config }} -DBUILD_OPTIX7=ON -DBUILD_OSPRAY=ON -Dospray_DIR=${{ env.OSPRAY_CMAKE_DIR }}
+        run: cmake . -B ${{ env.build_dir }} -G "${{ matrix.visual_studio }}" -A x64 -DCMAKE_BUILD_TYPE=${{ env.config }} -DBUILD_OPTIX7=ON -DBUILD_OSPRAY=ON -Dospray_DIR=${{ env.OSPRAY_CMAKE_DIR }} -DTBB_DIR=${{ env.TBB_CMAKE_DIR }}
 
       - name: Build
         working-directory: ${{ env.build_dir }}
