@@ -4,19 +4,21 @@
 
 # Dictionary of known ospray versions and thier download URLS, which do not follow a consistent pattern :(
 $OSPRAY_KNOWN_URLS = @{
-    "2.5.0" = "https://github.com/ospray/ospray/releases/download/v2.5.0/ospray-2.5.0.x86_64.windows.zip";
-	"2.6.0" = "https://github.com/ospray/ospray/releases/download/v2.6.0/ospray-2.6.0.x86_64.windows.zip"
+    "2.5.0"  = "https://github.com/ospray/ospray/releases/download/v2.5.0/ospray-2.5.0.x86_64.windows.zip";
+    "2.6.0"  = "https://github.com/ospray/ospray/releases/download/v2.6.0/ospray-2.6.0.x86_64.windows.zip";
+    "2.12.0" = "https://github.com/ospray/ospray/releases/download/v2.12.0/ospray-2.12.0.x86_64.windows.zip"
 }
 
 $TBB_KNOWN_URLS = @{
     "2021.1.1" = "https://github.com/oneapi-src/oneTBB/releases/download/v2021.1.1/oneapi-tbb-2021.1.1-win.zip";
-	"2021.2.0" = "https://github.com/oneapi-src/oneTBB/releases/download/v2021.2.0/oneapi-tbb-2021.2.0-win.zip";
+    "2021.2.0" = "https://github.com/oneapi-src/oneTBB/releases/download/v2021.2.0/oneapi-tbb-2021.2.0-win.zip";
     "2021.9.0" = "https://github.com/oneapi-src/oneTBB/releases/download/v2021.9.0/oneapi-tbb-2021.9.0-win.zip"
 }
 
 $TBB_VERSIONS = @{
-    "2.5.0" = "2021.1.1";
-	"2.6.0" = "2021.2.0"
+    "2.5.0"  = "2021.1.1";
+    "2.6.0"  = "2021.2.0"
+    "2.12.0" = "2021.9.0"
 }
 
 ## -------------------
