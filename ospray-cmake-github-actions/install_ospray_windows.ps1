@@ -46,7 +46,7 @@ Expand-Archive -Path "$RELEASE_FILE.zip" -Destination $RELEASE_FILE
 ## Select OSPRay packages to install from environment
 ## ------------------------------------------------
 
-$OSPRAY_CMAKE_DIR="$(Get-Location)\$RELEASE_FILE\lib\cmake\ospray-$OSPRAY_VERSION_MAJOR_MINOR"
+$OSPRAY_CMAKE_DIR="$(Get-Location)\$RELEASE_FILE\lib\cmake\ospray-$OSPRAY_VERSION_FULL"
 
 # Set environmental variables in this session
 $env:OSPRAY_CMAKE_DIR = "$($OSPRAY_CMAKE_DIR)"
