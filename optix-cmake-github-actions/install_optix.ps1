@@ -28,7 +28,7 @@ $OPTIX_PATCH=$Matches.patch
 ## ------------------------------------------------
 
 $DIR=$OPTIX_ALLVERSIONS[$OPTIX_VERSION_MAJOR_MINOR]
-$OptiX_INSTALL_DIR=$(Get-Location)\optix-cmake-github-actions\$DIR
+$OptiX_INSTALL_DIR="$(Get-Location)\optix-cmake-github-actions\$DIR"
 
 # Set environmental variables in this session
 $env:OptiX_INSTALL_DIR = "$($OptiX_INSTALL_DIR)"
