@@ -75,23 +75,13 @@ jobs:
             visual_studio: "Visual Studio 16 2019"
             cuda: "11.5.1"
             optix: "7.3.0"
+            ospray: "2.5.0"
             arch: 86
           # - os: windows-2019
           #   visual_studio: "Visual Studio 16 2019"
           #   cuda: "11.5.1"
+          #   optix: "7.3.0"
           #   arch: 75
-          # - os: windows-2019
-          #   visual_studio: "Visual Studio 16 2019"
-          #   cuda: "11.5.1"
-          #   arch: 70
-          # - os: windows-2019
-          #   visual_studio: "Visual Studio 16 2019"
-          #   cuda: "11.5.1"
-          #   arch: 61
-          # - os: windows-2019
-          #   visual_studio: "Visual Studio 16 2019"
-          #   cuda: "11.5.1"
-          #   arch: 37
     env:
       build_dir: "build"
       config: "Release"
@@ -109,10 +99,15 @@ jobs:
       - name: Install OptiX
         env:
           optix: ${{ matrix.optix }}
-        run: bash ./optix-cmake-github-actions/install_optix.sh
-        shell: bash
+        run: .\optix-cmake-github-actions\install_optix.ps1
+        shell: powershell
+      - name: Install OSPRay
+        env:
+          ospray: ${{ matrix.ospray }}
+        run: .\ospray-cmake-github-actions\install_ospray_ubuntu.ps1
+        shell: powershell
       - name: CMake
         run: cmake . -B ${{ env.build_dir }} -G "${{ matrix.visual_studio }}" -A x64 -DCMAKE_BUILD_TYPE=${{ env.config }} -DBUILD_OPTIX7=ON -DBUILD_OSPRAY=OFF
-      # - name: Build
-      #   working-directory: ${{ env.build_dir }}
-      #   run: cmake --build . --config ${{ env.config }} --target ALL_BUILD --verbose
+      - name: Build
+        working-directory: ${{ env.build_dir }}
+        run: cmake --build . --config ${{ env.config }} --target ALL_BUILD --verbose
