@@ -138,7 +138,7 @@ compute_scalar_minmax(void* _array, size_t count, size_t stride)
 
   T init;
 
-  init = std::numeric_limits<T>::min();
+  init = std::numeric_limits<T>::lowest();
   T actual_max = tbb::parallel_reduce(
     tbb::blocked_range<size_t>(0, count), init,
     [value](const tbb::blocked_range<size_t>& r, T v) -> T {
