@@ -41,14 +41,16 @@ fi
 ## -----------------
 RELEASE_URL="https://download.pytorch.org/libtorch/cu121/libtorch-shared-with-deps-${TORCH_VERSION_MAJOR_MINOR}%2Bcu121.zip"
 RELEASE_FILE="${PWD}/libtorch-shared-with-deps-${TORCH_VERSION_MAJOR_MINOR}+cu121"
+RELEASE_DIR="${PWD}/libtorch"
 
 echo "RELEASE_URL ${RELEASE_URL}"
 echo "RELEASE_FILE ${RELEASE_FILE}"
+echo "RELEASE_DIR ${RELEASE_DIR}"
 
 ## -----------------
 ## Download and install
 ## -----------------
-wget ${RELEASE_URL}
+wget -q ${RELEASE_URL}
 unzip "${RELEASE_FILE}.zip"
 
 if [[ $? -ne 0 ]]; then
@@ -59,13 +61,13 @@ fi
 ## -----------------
 ## Set environment vars / vars to be propagated
 ## -----------------
-export TORCH_CMAKE_DIR="${RELEASE_FILE}/share/cmake/Torch"
-export LD_LIBRARY_PATH="${RELEASE_FILE}/lib:${LD_LIBRARY_PATH}"
+export TORCH_CMAKE_DIR="${RELEASE_DIR}/share/cmake/Torch"
+export LD_LIBRARY_PATH="${RELEASE_DIR}/lib:${LD_LIBRARY_PATH}"
 
 # If executed on github actions, make the appropriate echo statements to update the environment
 if [[ $GITHUB_ACTIONS ]]; then
     # Set paths for subsequent steps, using ${TORCH_CMAKE_DIR}
     echo "Adding Torch to TORCH_CMAKE_DIR and LD_LIBRARY_PATH"
     echo "TORCH_CMAKE_DIR=${TORCH_CMAKE_DIR}" >> $GITHUB_ENV
-    echo "LD_LIBRARY_PATH=${RELEASE_FILE}/lib:${LD_LIBRARY_PATH}" >> $GITHUB_ENV
+    echo "LD_LIBRARY_PATH=${RELEASE_DIR}/lib:${LD_LIBRARY_PATH}" >> $GITHUB_ENV
 fi
